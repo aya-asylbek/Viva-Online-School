@@ -15,7 +15,12 @@ router.post("/register", async (req, res) => {
       "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
       [name, email, hashedPassword, role]
     );
-    res.status(201).json(result.rows[0]);
+    const user = result.rows[0];
+delete user.password; // delete password before sending
+res.status(201).json({
+  message: "User registered successfully!",
+  user
+});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -39,7 +44,8 @@ router.post("/login", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-
+    delete user.password;
+    
     res.json({ message: "Login successful", token, user });
   } catch (error) {
     res.status(500).json({ error: error.message });

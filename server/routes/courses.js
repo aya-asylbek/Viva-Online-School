@@ -1,20 +1,25 @@
 import express from "express";
 import pool from "../db.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
-// Get all courses
-router.get("/", async (req, res) => {
+
+// Get courses -verified with token only for students and teachers
+router.get("/", verifyToken, async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM courses ORDER BY id ASC");
+    const result = await pool.query("SELECT * FROM courses ORDER BY id");
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+// POST courses - only teacher
+router.post("/", verifyToken, async (req, res) => {
+  if (req.user.role !== "teacher") {
+    return res.status(403).json({ error: "Only teachers can add courses" });
+  }
 
-// Add new course
-router.post("/", async (req, res) => {
   const { name, credits, enrollment_limit } = req.body;
   try {
     const result = await pool.query(
@@ -27,8 +32,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update course
-router.put("/:id", async (req, res) => {
+// PUT courses - only teacher
+router.put("/:id", verifyToken, async (req, res) => {
+  if (req.user.role !== "teacher") {
+    return res.status(403).json({ error: "Only teachers can update courses" });
+  }
+
   const { id } = req.params;
   const { name, credits, enrollment_limit } = req.body;
   try {
@@ -42,8 +51,12 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Delete course
-router.delete("/:id", async (req, res) => {
+// DELETE courses - only teacher
+router.delete("/:id", verifyToken, async (req, res) => {
+  if (req.user.role !== "teacher") {
+    return res.status(403).json({ error: "Only teachers can delete courses" });
+  }
+
   const { id } = req.params;
   try {
     await pool.query("DELETE FROM courses WHERE id=$1", [id]);
