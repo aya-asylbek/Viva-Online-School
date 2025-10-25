@@ -6,7 +6,7 @@ import userRoutes from "./routes/users.js";
 import courseRoutes from "./routes/courses.js";
 import enrollmentRoutes from "./routes/enrollments.js";
 import gradeRoutes from "./routes/grades.js";
-
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
@@ -20,6 +20,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/grades", gradeRoutes);
+app.use("/api/auth", authRoutes);
+
 
 // main 
 app.get('/', (req, res) => {
