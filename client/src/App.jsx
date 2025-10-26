@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import PrivateRouteForDashboard from "./components/PrivateRouteForDashboard";
-
+import Grades from "./pages/Grades";
 
 function App() {
   return (
@@ -31,6 +31,16 @@ function App() {
       </PrivateRouteForDashboard>
     }
   />
+
+  <Route
+  path="/grades"
+  element={
+    <PrivateRouteForDashboard>
+      <Grades />
+    </PrivateRouteForDashboard>
+  }
+/>
+
 </Routes>
     </Router>
   );
