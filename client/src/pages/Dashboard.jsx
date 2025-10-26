@@ -14,6 +14,12 @@ const Dashboard = () => {
     }
   }, []);
 
+   const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("user");  
+    navigate("/login");               // redirect to login
+  };
+
   if (!user) return <p>Loading...</p>;
 
   return (
@@ -21,6 +27,9 @@ const Dashboard = () => {
       <h1>Welcome, {user.name}!</h1>
       <p>Email: {user.email}</p>
       <p>Role: {user.role}</p>
+      <button onClick={handleLogout} style={{ marginTop: "1rem" }}>
+        Logout
+      </button>
     </div>
   );
 };
