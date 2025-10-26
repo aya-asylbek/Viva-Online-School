@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import PrivateRouteForDashboard from "./components/PrivateRouteForDashboard";
 import Grades from "./pages/Grades";
+import Enrollments from "./pages/Enrollments";
+
 
 function App() {
   return (
@@ -13,35 +15,43 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+
         <Route
-  path="/dashboard"
-  element={
-    <PrivateRouteForDashboard>
-      <Dashboard />
-    </PrivateRouteForDashboard>
-  }
-/>
+          path="/dashboard"
+          element={
+            <PrivateRouteForDashboard>
+              <Dashboard />
+            </PrivateRouteForDashboard>
+          }
+        />
 
-       <Route
-    path="/courses"
-    element={
-      <PrivateRouteForDashboard>
-        <Courses />
-      </PrivateRouteForDashboard>
-    }
-  />
+        <Route
+          path="/courses"
+          element={
+            <PrivateRouteForDashboard>
+              <Courses />
+            </PrivateRouteForDashboard>
+          }
+        />
 
-  <Route
-  path="/grades"
-  element={
-    <PrivateRouteForDashboard>
-      <Grades />
-    </PrivateRouteForDashboard>
-  }
-/>
+        <Route
+          path="/grades"
+          element={
+            <PrivateRouteForDashboard>
+              <Grades />
+            </PrivateRouteForDashboard>
+          }
+        />
+        <Route
+          path="/enrollments"
+          element={
+            <PrivateRouteForDashboard>
+              <Enrollments />
+            </PrivateRouteForDashboard>
+          }
+        />
 
-</Routes>
+      </Routes>
     </Router>
   );
 }
