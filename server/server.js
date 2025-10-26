@@ -8,6 +8,7 @@ import enrollmentRoutes from "./routes/enrollments.js";
 import gradeRoutes from "./routes/grades.js";
 import authRoutes from "./routes/auth.js";
 
+
 dotenv.config();
 
 const app = express();
