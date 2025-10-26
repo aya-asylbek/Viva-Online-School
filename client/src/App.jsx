@@ -1,16 +1,19 @@
-import React from 'react';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
 
 function App() {
- return (
-   <>
-     <div>
-       <h1>Viva Online School</h1>
-     </div>
-   </>
- );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  );
 }
 
-
 export default App;
+
+
+
 
