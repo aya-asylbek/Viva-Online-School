@@ -4,12 +4,11 @@ import { AuthProvider, useAuth } from "./components/AuthContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Courses from "./pages/Courses";
+import Courses from "./pages/Courses/Courses";
 import Grades from "./pages/Grades";
 import Enrollments from "./pages/Enrollments";
 import Navbar from "./components/Navbar";
 
-// Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
