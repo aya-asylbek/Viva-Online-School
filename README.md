@@ -185,12 +185,31 @@ POST	/api/grades	Assign grade	Teacher
 
 ```
 Screenshots & UI Flow
+Register page
+<img width="1440" height="900" alt="register page" src="https://github.com/user-attachments/assets/0654ff0b-40d2-40e5-97ba-3641d9259bef" />
 
 Student Flow:
 Login → Dashboard (GPA, enrolled courses, grades) → Courses (enroll) → Grades (view progress)
+<img width="1440" height="900" alt="login page" src="https://github.com/user-attachments/assets/85c37436-76e7-45de-88b4-066bfe67ac53" />
+<img width="1440" height="900" alt="student dashboard" src="https://github.com/user-attachments/assets/2c6c14b7-746c-4064-b7c8-f7075af22fc9" />
+<img width="1440" height="900" alt="courses managment" src="https://github.com/user-attachments/assets/a0888c62-b604-419a-a296-fb0a15972b8a" />
+<img width="1440" height="900" alt="my grade history" src="https://github.com/user-attachments/assets/05f45294-1160-47e4-ab69-c5b963b5461e" />
+<img width="1440" height="900" alt="my courses enrollment" src="https://github.com/user-attachments/assets/b011fb0d-6109-4db1-8970-4be9e7cd63f2" />
 
 Teacher Flow:
 Login → Dashboard (overview) → Courses (manage) → Users (search) → Grades (assign)
+<img width="1440" height="900" alt="login as a techer" src="https://github.com/user-attachments/assets/6ccece3d-2284-4a02-a2fd-fa28c6a743c2" />
+<img width="1440" height="900" alt="teacher dashboard" src="https://github.com/user-attachments/assets/00729f61-3f56-4014-bb6d-d955695f5731" />
+<img width="1440" height="900" alt="courses managment and prerequisites" src="https://github.com/user-attachments/assets/482255b3-2c28-4ed4-9534-741fb07ec9e0" />
+attachments/assets/5e73f780-f411-45f2-81a0-b43066e418da" />
+<img width="1440" height="900" alt="grade managment" src="https://github.com/user-attachments/assets/e8dd1530-bf72-4e07-8bd0-267d78ec6687" />
+<img width="1440" height="900" alt="manage enrollment" src="https://github.com/user-attachments/assets/dd46b07a-8012-4b77-9eec-3f5f588737a1" />
+<img width="1440" height="900" alt="user managment" src="https://github.com/user-attachments/assets/98ee3296-899a-4531-ae08-fc79570f89cc" />
+<img width="1440" height="900" alt="user details" src="https://github.com/user-attachments/assets/f661d5e8-ad34-402b-b11b-d9710d8fd5dc" />
+
+
+
+
 
 Testing
 
