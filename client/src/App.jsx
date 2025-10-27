@@ -8,14 +8,15 @@ import Courses from "./pages/Courses/Courses";
 import Grades from "./pages/Grades";
 import Enrollments from "./pages/Enrollments";
 import Navbar from "./components/Navbar";
+import UserManagement from "./pages/UserManagement";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  
+
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return user ? children : <Navigate to="/login" replace />;
 };
 
@@ -76,10 +77,22 @@ function App() {
               </ProtectedRoute>
             }
           />
+          {/* 👇 ДОБАВЬ ЭТОТ МАРШРУТ ВНУТРИ КОМПОНЕНТА Routes */}
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute>
+                <div>
+                  <Navbar />
+                  <UserManagement />
+                </div>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>
   );
 }
-
 export default App;
+

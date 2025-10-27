@@ -38,6 +38,11 @@ const Navbar = () => {
                             <Link to="/enrollments" className="nav-link">
                                 👥 Manage Enrollment
                             </Link>
+                            {user?.role === "teacher" && (
+                                <Link to="/users" className="nav-link">
+                                    👥 Users
+                                </Link>
+                            )}
                         </>
                     ) : (
                         <>

@@ -1,0 +1,85 @@
+.user-management {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-box {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-input {
+    padding: 12px 16px;
+    width: 400px;
+    border: 2px solid #74b9ff;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #0984e3;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.users-table th {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.users-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.users-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.role-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-badge.teacher {
+    background: #ffeaa7;
+    color: #e17055;
+}
+
+.role-badge.student {
+    background: #74b9ff;
+    color: white;
+}
+
+.access-denied {
+    text-align: center;
+    padding: 50px;
+    color: #e17055;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #636e72;
+}
+
+.table-container {
+    overflow-x: auto;
+}
