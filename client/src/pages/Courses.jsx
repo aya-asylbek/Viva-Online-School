@@ -5,6 +5,7 @@ import "../styles/Courses.css";
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
+    const [enrollments, setEnrollments] = useState([]);
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
@@ -18,6 +19,7 @@ const Courses = () => {
 
     useEffect(() => {
         fetchCourses();
+        fetchEnrollments();
     }, []);
 
     const fetchCourses = async () => {
@@ -29,6 +31,27 @@ const Courses = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const fetchEnrollments = async () => {
+        try {
+            const res = await api.get("/enrollments");
+            console.log("📊 Enrollments data:", res.data);
+            setEnrollments(res.data);
+        } catch (err) {
+            console.error("Error fetching enrollments:", err);
+        }
+    };
+
+    const getAvailableSpots = (course) => {
+        // Ищем по НАЗВАНИЮ курса, так как enrollments API возвращает названия
+        const currentEnrollments = enrollments.filter(e => e.course === course.name);
+        const available = course.enrollment_limit - currentEnrollments.length;
+        return {
+            current: currentEnrollments.length,
+            available: available,
+            isFull: available <= 0
+        };
     };
 
     const handleAddCourse = async (e) => {
@@ -84,10 +107,27 @@ const Courses = () => {
 
     const handleEnroll = async (courseId) => {
         try {
+            const course = courses.find(c => c.id === courseId);
+            
+            if (!course) {
+                alert("❌ Course not found!");
+                return;
+            }
+
+            // Ищем по названию курса
+            const currentEnrollments = enrollments.filter(e => e.course === course.name);
+            
+            if (currentEnrollments.length >= course.enrollment_limit) {
+                alert(`❌ Course "${course.name}" is full! Enrollment limit (${course.enrollment_limit}) reached.`);
+                return;
+            }
+
             await api.post("/enrollments", {
                 student_id: user.id,
                 course_id: courseId
             });
+            
+            fetchEnrollments();
             alert("Successfully enrolled in course!");
         } catch (err) {
             alert("Enrollment failed: " + err.response?.data?.error);
@@ -161,7 +201,17 @@ const Courses = () => {
                             <tr key={course.id}>
                                 <td>{course.name}</td>
                                 <td>{course.credits}</td>
-                                <td>{course.enrollment_limit} students</td>
+                                <td>
+                                    {getAvailableSpots(course).current}/{course.enrollment_limit} students
+                                    <span style={{
+                                        fontSize: '0.8rem', 
+                                        color: getAvailableSpots(course).isFull ? '#e17055' : '#00b894',
+                                        marginLeft: '5px',
+                                        fontWeight: '500'
+                                    }}>
+                                        ({getAvailableSpots(course).available} spots left)
+                                    </span>
+                                </td>
                                 <td className="actions">
                                     {user?.role === "teacher" ? (
                                         <>
@@ -170,7 +220,7 @@ const Courses = () => {
                                                 <div className="edit-form">
                                                     <input
                                                         value={editForm.name}
-                                                        onChange={(e) => setEditForm({...editForm, name: e.target.value})}
+                                                        onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
                                                         className="edit-input"
                                                     />
                                                     <button onClick={(e) => handleUpdateCourse(e, course.id)} className="btn-success">
@@ -181,13 +231,13 @@ const Courses = () => {
                                             ) : (
                                                 // EDIT/DELETE BUTTONS
                                                 <>
-                                                    <button 
+                                                    <button
                                                         className="btn-edit"
                                                         onClick={() => handleEdit(course)}
                                                     >
                                                         ✏️ Edit
                                                     </button>
-                                                    <button 
+                                                    <button
                                                         className="btn-danger"
                                                         onClick={() => handleDelete(course.id)}
                                                     >
@@ -198,10 +248,11 @@ const Courses = () => {
                                         </>
                                     ) : (
                                         <button 
-                                            className="btn-enroll"
+                                            className={getAvailableSpots(course).isFull ? "btn-disabled" : "btn-enroll"}
                                             onClick={() => handleEnroll(course.id)}
+                                            disabled={getAvailableSpots(course).isFull}
                                         >
-                                            ➕ Enroll
+                                            {getAvailableSpots(course).isFull ? "🚫 Full" : "➕ Enroll"}
                                         </button>
                                     )}
                                 </td>

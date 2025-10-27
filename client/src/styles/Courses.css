@@ -29,7 +29,7 @@
 }
 
 .courses-table th {
-  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
   color: white;
   padding: 15px;
   text-align: left;
@@ -50,7 +50,7 @@
   gap: 10px;
 }
 
-.btn-primary, .btn-success, .btn-edit, .btn-danger, .btn-enroll {
+.btn-primary, .btn-success, .btn-edit, .btn-danger, .btn-enroll, .btn-disabled {
   padding: 8px 16px;
   border: none;
   border-radius: 6px;
@@ -84,6 +84,13 @@
   color: white;
 }
 
+.btn-disabled {
+  background: #b2bec3;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .btn-primary:hover { background: #0984e3; }
 .btn-success:hover { background: #00a085; }
 .btn-edit:hover { background: #f39c12; }
@@ -112,6 +119,19 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 6px;
+  flex: 1;
+}
+
+.edit-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.edit-input {
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   flex: 1;
 }
 
