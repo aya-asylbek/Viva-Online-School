@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -23,11 +22,11 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      // for demo from my db
+      // Используем mock данные для демо
       setStats({
-        totalCourses: 7, // db
-        totalStudents: 4, // Adam, Maria, Alice, Adrian
-        totalGrades: 7   // grades table
+        totalCourses: 7,
+        totalStudents: 4,
+        totalGrades: 7
       });
 
       // Mock recent grades
@@ -96,7 +95,7 @@ const Dashboard = () => {
           className="action-btn tertiary"
           onClick={() => navigate("/courses")}
         >
-          👥 View Students
+          📊 View Enrollment Limits
         </button>
       </div>
 
@@ -147,9 +146,9 @@ const Dashboard = () => {
               <button onClick={() => navigate("/grades")}>Manage Grades →</button>
             </div>
             <div className="quick-stat-item">
-              <h4>Student Overview</h4>
-              <p>View all students and their progress</p>
-              <button onClick={() => navigate("/courses")}>View Students →</button>
+              <h4>Enrollment Overview</h4>
+              <p>View course capacity and enrollment limits</p>
+              <button onClick={() => navigate("/courses")}>View Limits →</button>
             </div>
           </div>
         </div>
