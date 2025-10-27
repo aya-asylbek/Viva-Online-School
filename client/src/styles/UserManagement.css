@@ -83,3 +83,14 @@
 .table-container {
     overflow-x: auto;
 }
+
+.user-name-link {
+  color: #0984e3;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.user-name-link:hover {
+  color: #074b8f;
+}

@@ -1,20 +1,41 @@
 import express from "express";
 import pool from "../db.js";
+import { verifyToken } from "../middlewares/verifyToken.js"; // ← Добавим аутентификацию
 
 const router = express.Router();
 
 // Get all users
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {  // ← Добавил verifyToken
   try {
-    const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
+    const result = await pool.query("SELECT id, name, email, role FROM users ORDER BY id ASC");
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// 👇 ДОБАВЬ ЭТОТ ENDPOINT ДЛЯ ОДНОГО ПОЛЬЗОВАТЕЛЯ
+// Get user by ID
+router.get("/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT id, name, email, role FROM users WHERE id = $1",
+      [id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Add user
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {  // ← Добавил verifyToken
   const { name, email, password, role } = req.body;
   try {
     const result = await pool.query(
@@ -28,7 +49,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update user
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {  // ← Добавил verifyToken
   const { id } = req.params;
   const { name, email, password, role } = req.body;
   try {
@@ -43,7 +64,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete user
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {  // ← Добавил verifyToken
   const { id } = req.params;
   try {
     await pool.query("DELETE FROM users WHERE id=$1", [id]);

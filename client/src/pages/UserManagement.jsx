@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { useAuth } from "../components/AuthContext";
 import "../styles/UserManagement.css";
@@ -8,6 +9,7 @@ const UserManagement = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const { user } = useAuth();
+    const navigate = useNavigate();
 
     if (user?.role !== "teacher") {
         return (
@@ -33,7 +35,7 @@ const UserManagement = () => {
         }
     };
 
-    const filteredUsers = users.filter(user => 
+    const filteredUsers = users.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -43,7 +45,7 @@ const UserManagement = () => {
     return (
         <div className="user-management">
             <h1>👥 User Management</h1>
-            
+
             <div className="search-box">
                 <input
                     type="text"
@@ -66,9 +68,17 @@ const UserManagement = () => {
                     </thead>
                     <tbody>
                         {filteredUsers.map(user => (
+                            
                             <tr key={user.id}>
                                 <td>{user.id}</td>
-                                <td>{user.name}</td>
+                                <td>
+                                    <span
+                                        className="user-name-link"
+                                        onClick={() => navigate(`/users/${user.id}`)}
+                                    >
+                                        {user.name}
+                                    </span>
+                                </td>
                                 <td>{user.email}</td>
                                 <td>
                                     <span className={`role-badge ${user.role}`}>
