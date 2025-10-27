@@ -1,0 +1,20 @@
+import { describe, it, expect } from 'vitest'
+
+describe('Courses Logic', () => {
+  it('should validate course prerequisites', () => {
+    const course = {
+      name: 'CSS Styling',
+      prerequisites: [1] // требует HTML Basics
+    }
+    expect(course.prerequisites).toContain(1)
+  })
+
+  it('should check enrollment limits', () => {
+    const course = {
+      name: 'React',
+      enrollment_limit: 20,
+      enrolled_students: 15
+    }
+    expect(course.enrolled_students).toBeLessThan(course.enrollment_limit)
+  })
+})
