@@ -9,6 +9,8 @@ import Grades from "./pages/Grades";
 import Enrollments from "./pages/Enrollments";
 import Navbar from "./components/Navbar";
 import UserManagement from "./pages/UserManagement";
+import UserDetails from "./pages/UserDetails";
+
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -29,7 +31,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Protected Routes with Navbar */}
+        
           <Route
             path="/dashboard"
             element={
@@ -77,7 +79,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* 👇 ДОБАВЬ ЭТОТ МАРШРУТ ВНУТРИ КОМПОНЕНТА Routes */}
           <Route
             path="/users"
             element={
@@ -85,6 +86,17 @@ function App() {
                 <div>
                   <Navbar />
                   <UserManagement />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/users/:userId"
+            element={
+              <ProtectedRoute>
+                <div>
+                  <Navbar />
+                  <UserDetails />
                 </div>
               </ProtectedRoute>
             }
