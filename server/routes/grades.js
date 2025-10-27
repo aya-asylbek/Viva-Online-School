@@ -108,6 +108,75 @@ router.get("/gpa/:studentId", verifyToken, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+   // Get student dashboard stats (enrollments count, grades count, GPA)
+router.get("/student/:id/dashboard-stats", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    // 1. Count enrolled courses
+    const enrollmentsResult = await pool.query(
+      "SELECT COUNT(*) FROM enrollments WHERE student_id = $1",
+      [id]
+    );
+    const enrolledCourses = parseInt(enrollmentsResult.rows[0].count);
 
+    // 2. Count grades received
+    const gradesResult = await pool.query(
+      "SELECT COUNT(*) FROM grades WHERE student_id = $1",
+      [id]
+    );
+    const gradesReceived = parseInt(gradesResult.rows[0].count);
+
+    // 3. Calculate GPA 
+    const gpaResult = await pool.query(
+      "SELECT grade FROM grades WHERE student_id = $1",
+      [id]
+    );
+
+    const grades = gpaResult.rows.map(row => row.grade);
+    let gpa = 0.00;
+
+    if (grades.length > 0) {
+      const gradeMap = {
+        "A+": 4.0, "A": 4.0, "A-": 3.7,
+        "B+": 3.3, "B": 3.0, "B-": 2.7,
+        "C+": 2.3, "C": 2.0, "C-": 1.7,
+        "D+": 1.3, "D": 1.0, "D-": 0.7,
+        "F": 0.0,
+      };
+      const total = grades.reduce((acc, g) => acc + (gradeMap[g] || 0), 0);
+      gpa = (total / grades.length).toFixed(2);
+    }
+
+    res.json({
+      enrolledCourses,
+      gradesReceived, 
+      gpa: parseFloat(gpa)
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get student's grades for grades page
+router.get("/student/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    const result = await pool.query(
+      `SELECT g.id, c.name AS course, g.grade, g.date_assigned 
+       FROM grades g
+       JOIN courses c ON g.course_id = c.id
+       WHERE g.student_id = $1
+       ORDER BY g.date_assigned DESC`,
+      [id]
+    );
+    
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 export default router;
 

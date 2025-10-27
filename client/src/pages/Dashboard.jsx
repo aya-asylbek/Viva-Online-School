@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -21,7 +22,7 @@ const Dashboard = () => {
             console.log("🔍 User role:", user?.role);
 
             if (user?.role === "teacher") {
-                // TEACHER DASHBOARD
+                // Teacher dashboard
                 setStats({
                     totalCourses: 7,
                     totalStudents: 4,
@@ -34,13 +35,30 @@ const Dashboard = () => {
                     { student_name: "Adrian Knowles", course_name: "HTML Basics", grade: "B+", date: "1 day ago" }
                 ]);
             } else {
-                // STUDENT DASHBOARD
-                setStats({
-                    gpa: "0.00",
-                    enrolledCourses: 0,
-                    gradesReceived: 0
-                });
-                setRecentGrades([]);
+                // student dashboard
+                try {
+                    // 1.get info
+                    const statsResponse = await api.get(`/grades/student/${user.id}/dashboard-stats`);
+                    setStats(statsResponse.data);
+
+                    // 2. get grades
+                    const gradesResponse = await api.get(`/grades/student/${user.id}`);
+                    const recentGradesData = gradesResponse.data.map(grade => ({
+                        course_name: grade.course,
+                        grade: grade.grade,
+                        date: new Date(grade.date_assigned).toLocaleDateString()
+                    }));
+                    setRecentGrades(recentGradesData.slice(0, 5)); // Последние 5 оценок
+                } catch (err) {
+                    console.error("Error fetching student dashboard data:", err);
+                    // Fallback
+                    setStats({
+                        gpa: "0.00",
+                        enrolledCourses: 0,
+                        gradesReceived: 0
+                    });
+                    setRecentGrades([]);
+                }
             }
         } catch (err) {
             console.error("Error:", err);
@@ -61,7 +79,7 @@ const Dashboard = () => {
             {/* 📊 Statistics Cards */}
             <div className="stats-grid">
                 {user?.role === "teacher" ? (
-                    // TEACHER STATS
+                    // Teacher stat
                     <>
                         <div className="stat-card">
                             <div className="stat-icon">📚</div>
@@ -86,7 +104,7 @@ const Dashboard = () => {
                         </div>
                     </>
                 ) : (
-                    // STUDENT STATS
+                    // student stst
                     <>
                         <div className="stat-card">
                             <div className="stat-icon">📊</div>
@@ -116,7 +134,7 @@ const Dashboard = () => {
             {/* 🚀 Quick Actions */}
             <div className="quick-actions">
                 {user?.role === "teacher" ? (
-                    // TEACHER ACTIONS
+                    // Teacher action
                     <>
                         <button className="action-btn primary" onClick={() => navigate("/courses")}>
                             ➕ Add New Course
@@ -129,7 +147,7 @@ const Dashboard = () => {
                         </button>
                     </>
                 ) : (
-                    // STUDENT ACTIONS
+                    // Student actions
                     <>
                         <button className="action-btn primary" onClick={() => navigate("/courses")}>
                             📖 View My Courses
@@ -189,7 +207,7 @@ const Dashboard = () => {
                     <h2>🚀 Quick Access</h2>
                     <div className="quick-stats">
                         {user?.role === "teacher" ? (
-                            // TEACHER QUICK ACCESS
+                            // T.quick
                             <>
                                 <div className="quick-stat-item">
                                     <h4>Course Management</h4>
@@ -208,7 +226,7 @@ const Dashboard = () => {
                                 </div>
                             </>
                         ) : (
-                            // STUDENT QUICK ACCESS
+                            // STudent quick 
                             <>
                                 <div className="quick-stat-item">
                                     <h4>Available Courses</h4>
