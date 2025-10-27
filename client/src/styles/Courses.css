@@ -141,3 +141,225 @@
   color: #636e72;
   font-size: 1.1rem;
 }
+
+/* Prerequisites Styles */
+.prerequisites-badge {
+    background: #ffeaa7;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: #e17055;
+    font-weight: 500;
+    cursor: help;
+}
+
+.no-prerequisites {
+    color: #b2bec3;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.btn-prerequisites {
+    background: #fdcb6e;
+    color: #2d3436;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 2px;
+    font-size: 0.85rem;
+}
+
+.btn-prerequisites:hover {
+    background: #e6b05a;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.prerequisites-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.prerequisite-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.prerequisite-item:hover {
+    background: #e9ecef;
+}
+
+.prerequisite-item:last-child {
+    border-bottom: none;
+}
+
+.prerequisite-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.prerequisite-item input {
+    margin-right: 12px;
+    transform: scale(1.2);
+}
+
+.prerequisite-course {
+    display: flex;
+    flex-direction: column;
+}
+
+.course-meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.selected-count {
+    text-align: center;
+    padding: 10px;
+    background: #d4edda;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-weight: 500;
+    color: #155724;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.teacher-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.teacher-actions-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-prerequisites-setup {
+    background: #0984e3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-prerequisites-setup:hover {
+    background: #0770c4;
+}
+
+/* Course Table Enhancements */
+.course-id {
+    font-weight: bold;
+    color: #636e72;
+}
+
+.course-name {
+    font-weight: 600;
+}
+
+.enrollment-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.current-enrollment {
+    font-weight: 500;
+}
+
+.spots-left {
+    font-size: 0.8rem;
+}
+
+.spots-left.available {
+    color: #00b894;
+}
+
+.spots-left.full {
+    color: #e17055;
+}
+
+.prerequisites-cell {
+    position: relative;
+}
+
+.prerequisites-info {
+    position: relative;
+}
+
+.prerequisites-tooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d3436;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.prerequisites-info:hover .prerequisites-tooltip {
+    visibility: visible;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .teacher-actions-header {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .teacher-actions {
+        flex-direction: column;
+    }
+    
+    .teacher-actions button {
+        margin: 2px 0;
+    }
+}
